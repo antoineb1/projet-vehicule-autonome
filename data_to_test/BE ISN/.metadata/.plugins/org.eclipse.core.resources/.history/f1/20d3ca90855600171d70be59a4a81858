@@ -1,0 +1,80 @@
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfByte;
+import org.opencv.core.MatOfPoint;
+import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
+import org.opencv.core.Size;
+import org.opencv.highgui.Highgui;
+import org.opencv.highgui.VideoCapture;
+import org.opencv.imgproc.Imgproc;
+
+public class AnalyseVideo {
+	static {
+		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+	}
+
+	static Mat imag = null;
+
+	public static void main(String[] args) {
+		JFrame jframe = new JFrame("Detection de panneaux sur un flux vidéo");
+		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JLabel vidpanel = new JLabel();
+		jframe.setContentPane(vidpanel);
+		jframe.setSize(720, 480);
+		jframe.setVisible(true);
+
+		Mat frame = new Mat();
+		VideoCapture camera = new VideoCapture("video1.avi");
+		Mat PanneauAAnalyser = null;
+
+			while (camera.read(frame)) {
+			//A completer
+
+
+			ImageIcon image = new ImageIcon(Mat2bufferedImage(frame));
+			vidpanel.setIcon(image);
+			vidpanel.repaint();
+		}
+	}
+
+
+
+
+
+
+	public static BufferedImage Mat2bufferedImage(Mat image) {
+		MatOfByte bytemat = new MatOfByte();
+		Highgui.imencode(".jpg", image, bytemat);
+		byte[] bytes = bytemat.toArray();
+		InputStream in = new ByteArrayInputStream(bytes);
+		BufferedImage img = null;
+		try {
+			img = ImageIO.read(in);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return img;
+	}
+
+
+
+	
+
+
+}

@@ -16,7 +16,7 @@ SCALE=0.7
 
 class Interface:
     def __init__(self, demo=False):
-        print(demo)
+        #print(demo)
         self.demo = demo
         
         self.root = Tk()
